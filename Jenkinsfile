@@ -16,10 +16,10 @@ pipeline {
             post {
                 always {
                     // Publishes the HTML report to the Jenkins UI
-                    recordIssues(
-                                tools: [pmd(pattern: 'target/pmd.xml')],
-                                enabledForFailure: true
-                         )
+                  //  recordIssues(
+                    //            tools: [pmd(pattern: 'target/pmd.xml')],
+                      //          enabledForFailure: true
+                        // )
 
                     publishHTML(target: [
                         allowMissing: false,
