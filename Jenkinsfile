@@ -1,7 +1,17 @@
 pipeline {
-    agent any
-        docker {
-            image 'maven:3.9.6-eclipse-temurin-17'
+    agent {
+        kubernetes {
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: maven
+      image: maven:3.9.6-eclipse-temurin-17
+      command:
+        - cat
+      tty: true
+"""
         }
     }
     
