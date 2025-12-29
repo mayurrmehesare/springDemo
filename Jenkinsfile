@@ -40,6 +40,13 @@ pipeline {
             }
         }
 
+        stage('Build JAR') {
+            when { branch 'main' }
+            steps {
+                sh './mvnw clean package -DskipTests'
+            }
+        }
+
         stage('Deploy to OpenShift') {
             // Only run this if the code is merged into the main branch
             when {
@@ -48,7 +55,10 @@ pipeline {
             steps {
                 script {
                     // Use OpenShift CLI or Jenkins plugin to trigger build
-                    sh "oc start-build springboot-camel-app --from-dir=. --follow"
+                    sh "oc start-build springboot-camel-app --from-dir=./target --follow"
+
+                    // Optional: Rollout the new deployment
+                    sh "oc rollout status deployment/springboot-camel-app"
                 }
             }
         }
